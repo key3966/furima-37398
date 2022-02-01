@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   with_options presense: true do
     validates :title
     validates :explanation
-    validates :price
+    validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 10000000 }
     validates :user
   end
   
