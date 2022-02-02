@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :user
   belongs_to :category
   belongs_to :status
   belongs_to :shipping_fee
@@ -8,6 +9,7 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   with_options presence: true do
+    validates :image
     validates :title
     validates :explanation
     validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 10000000 }
