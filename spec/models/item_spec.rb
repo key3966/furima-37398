@@ -9,7 +9,7 @@ RSpec.describe Item, type: :model do
   describe '新規商品出品' do
     context '新規出品できるとき' do
       it 'image、title、explanation、category_id、status_id、shipping_fee_id、prefecture_id、shipping_time_id、price、user_idが存在すれば登録できる' do
-       expect(@item).to be_valid
+        expect(@item).to be_valid
       end
     end
     context '新規出品できないとき' do
@@ -61,22 +61,22 @@ RSpec.describe Item, type: :model do
       it '価格が299円以下だと出品できない' do
         @item.price = Faker::Number.between(from: 1, to: 299)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than 299")
+        expect(@item.errors.full_messages).to include('Price must be greater than 299')
       end
-      it '価格が10000000円以上だと出品できない' do
+      it '価格が10,000,000円以上だと出品できない' do
         @item.price = Faker::Number.number(digits: 8)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
+        expect(@item.errors.full_messages).to include('Price must be less than 10000000')
       end
       it '価格が全角数値だと出品できない' do
         @item.price = '１００００００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it '価格が数値以外だと出品できない' do
         @item.price = '百万円'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
     end
   end
