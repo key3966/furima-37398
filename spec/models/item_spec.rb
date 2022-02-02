@@ -61,12 +61,12 @@ RSpec.describe Item, type: :model do
       it '価格が299円以下だと出品できない' do
         @item.price = Faker::Number.between(from: 1, to: 299)
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be greater than 299')
+        expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
       end
       it '価格が10,000,000円以上だと出品できない' do
         @item.price = Faker::Number.number(digits: 8)
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price must be less than 10000000')
+        expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
       it '価格が全角数値だと出品できない' do
         @item.price = '１００００００'
