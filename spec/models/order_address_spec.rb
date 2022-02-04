@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    @order_address = FactoryBot.build(:order_address)
-    #sleep 0.1
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
+    sleep 0.1
   end
 
   describe '商品購入' do
@@ -68,6 +70,11 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Tel is too short (minimum is 10 characters)')
       end
+      it '電話番号が12桁以上では購入できない' do
+        @order_address.tel = '123456789012'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Tel is too long (maximum is 11 characters)')
+      end
       it '電話番号にハイフンが含まれていると購入できない' do
         @order_address.tel = '090-1234-5678'
         @order_address.valid?
@@ -84,12 +91,12 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include('Tel is not a number')
       end
       it '購入者が紐付いてなければ購入できない' do
-        @order_address.user_id = ''
+        @order_address.user_id = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("User can't be blank")
       end
       it '商品が紐付いてなければ購入できない' do
-        @order_address.item_id = ''
+        @order_address.item_id = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Item can't be blank")
       end

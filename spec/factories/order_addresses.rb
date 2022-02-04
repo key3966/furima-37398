@@ -7,7 +7,6 @@ FactoryBot.define do
     house_number  { '1-1' }
     tel           { '09012345678' }
     building      { '藤沢市役所' }
-    price         { 66_666 }
     user_id       { 1 }
     item_id       { 1 }
   end
